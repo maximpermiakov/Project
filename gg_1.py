@@ -3,15 +3,14 @@ import sys
 import os
 from pygame.locals import *
 pygame.init()
-# размеры окна:
-size = width, height = 800, 600
-clock = pygame.time.Clock()
-# screen — холст, на котором нужно рисовать:
+size = width, height = 800, 600  # размерчик нужно будет поменять
+clock = pygame.time.Clock()  # вот тут вот вообще лучше ничего не трогать(и на строку ниже тоже)
 screen = pygame.display.set_mode(size)
 FPS = 50
-BACK = ['fon.png']
+BACK = ['fon.png']  # здесь будут фоны
 volume = None
 
+# для загрузки изображений
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
     image = pygame.image.load(fullname)
@@ -23,8 +22,9 @@ def load_image(name, colorkey=None):
         image = image.convert_alpha()
     return image
 
-all_sprites = pygame.sprite.Group()
+all_sprites = pygame.sprite.Group() # здесь хранятся какие-то картинки
 
+# для загрузки этих картинок)
 def print_sprite(x, y, im):
     sprite_im = pygame.sprite.Sprite()
     sprite_im.image = load_image(im)
@@ -34,11 +34,12 @@ def print_sprite(x, y, im):
     sprite_im.rect.y = y
     return sprite_im
 
-
+# сюда тоже лучше не лезть, она все вырубает)
 def terminate():
     pygame.quit()
     sys.exit()
 
+# отрисовочки для главного экрана
 def print_ss():
     fon = pygame.transform.scale(load_image(BACK[0]), (width, height))
     screen.blit(fon, (0, 0))
@@ -52,9 +53,11 @@ def print_ss():
     pygame.draw.rect(screen, (0, 255, 0), (text_x - 10, text_y - 10,
                                            text_w + 20, text_h + 20), 1)
 
+# это для экрана настроек(ДОДЕЛАТЬ!!!)
 def print_set():
     intro_text = ["Громкость",
                   "Яркость",
+                  "Громкость музыки",
                   "Применить"]
 
     fon = pygame.transform.scale(load_image(BACK[0]), (width, height))
@@ -62,7 +65,7 @@ def print_set():
     more_less_1 = ["+", "-"]
     font = pygame.font.Font(None, 30)
     k = 0
-    for i in range(0, 200, 100):
+    for i in range(0, 300, 100):
         text = font.render(intro_text[k], 1, (100, 255, 100))
         text_x = width // 2 - text.get_width() // 2
         text_y = 20 - text.get_height() // 2 + i
@@ -81,7 +84,7 @@ def print_set():
                                                 text_w + 20, text_h + 20), 1)
 
 
-
+# сам главный экран(собственной персоной)
 def start_screen():
     sets = print_sprite(750, 550, "bugs.png")
     volume = print_sprite(750, 10, "volume.png")
@@ -118,7 +121,7 @@ def start_screen():
         clock.tick(FPS)
 
 
-
+# а вот это экран настроек
 def settings():
     all_sprites = pygame.sprite.Group()
     sprite = pygame.sprite.Sprite()
@@ -141,6 +144,7 @@ def settings():
 
 screens = 1
 
+# какая-то страшная фигня
 while True:
     if screens == 1:
         screens = start_screen()
