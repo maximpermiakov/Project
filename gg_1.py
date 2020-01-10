@@ -33,7 +33,7 @@ def print_sprite(x, y, im):
     sprite_im.rect.x = x
     sprite_im.rect.y = y
     return sprite_im
-
+#comment
 
 def terminate():
     pygame.quit()
