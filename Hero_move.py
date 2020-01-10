@@ -6,7 +6,7 @@ pygame.init()
 size = width, height = 500, 500
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("First_Step")
-game_fon = "game_fon.jpeg"
+
 
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
@@ -20,11 +20,8 @@ def load_image(name, colorkey=None):
     return image
 
 all_sprites = pygame.sprite.Group()
-x = 50
+x = 0
 y = 450
-fon = pygame.transform.scale(load_image(game_fon), (width, height))
-screen.blit(game_fon, (0, 0))
-font = pygame.font.Font(None, 50)
 
 def print_sprite(x, y, im):
     sprite_im = pygame.sprite.Sprite()
