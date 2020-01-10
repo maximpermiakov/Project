@@ -3,9 +3,10 @@ import sys
 import os
 
 pygame.init()
-size = width, heigth = 500, 500
+size = width, height = 500, 500
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("First_Step")
+game_fon = "game_fon.jpeg"
 
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
@@ -21,6 +22,9 @@ def load_image(name, colorkey=None):
 all_sprites = pygame.sprite.Group()
 x = 50
 y = 450
+fon = pygame.transform.scale(load_image(game_fon), (width, height))
+screen.blit(game_fon, (0, 0))
+font = pygame.font.Font(None, 50)
 
 def print_sprite(x, y, im):
     sprite_im = pygame.sprite.Sprite()
@@ -45,12 +49,12 @@ while run:
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT] and x > 0:
         x -= speed
-    if keys[pygame.K_RIGHT] and x < 500 - 45:
+    if keys[pygame.K_RIGHT] and x < width - 45:
         x += speed
     if not(isJump):
         if keys[pygame.K_UP] and y > 0:
             y -= speed
-        if keys[pygame.K_DOWN] and y < 500 - 45:
+        if keys[pygame.K_DOWN] and y < height - 45:
             y += speed
         if keys[pygame.K_SPACE]:
             isJump = True
