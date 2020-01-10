@@ -68,7 +68,6 @@ def print_set():
         text_y = 20 - text.get_height() // 2 + i
         text_w = text.get_width()
         text_h = text.get_height()
-
         k += 1
         screen.blit(text, (text_x, text_y))
 
@@ -123,7 +122,6 @@ def start_screen():
 def settings():
     all_sprites = pygame.sprite.Group()
     sprite = pygame.sprite.Sprite()
-    fon = pygame.transform.scale(load_image(BACK[0]), (width, height))
     sprite.image = load_image("back4.png")
     sprite.rect = sprite.image.get_rect()
     all_sprites.add(sprite)
@@ -137,7 +135,6 @@ def settings():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if 760 < event.pos[0] < 790 and 560 < event.pos[1] < 590:
                     return 1
-        screen.blit(fon, (0, 0))
         all_sprites.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
