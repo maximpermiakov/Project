@@ -84,7 +84,7 @@ def print_set():
 
 
 def start_screen():
-    #sets = print_sprite(750, 550, "bugs.png")
+    sets = print_sprite(750, 550, "bugs.png")
     volume = print_sprite(750, 10, "volume.png")
     print_ss()
     sound = 0
@@ -93,7 +93,7 @@ def start_screen():
             if event.type == pygame.QUIT:
                 return 0
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if 760 < event.pos[0] < 790  and 560 < event.pos[1] < 590 :
+                if 760 < event.pos[0] < 790 and 560 < event.pos[1] < 590 :
                     return 2
                 elif 750 < event.pos[0] < 790 and 5 < event.pos[1] < 40:
                     if sound == 0:
@@ -123,6 +123,7 @@ def start_screen():
 def settings():
     all_sprites = pygame.sprite.Group()
     sprite = pygame.sprite.Sprite()
+    fon = pygame.transform.scale(load_image(BACK[0]), (width, height))
     sprite.image = load_image("back4.png")
     sprite.rect = sprite.image.get_rect()
     all_sprites.add(sprite)
@@ -134,7 +135,7 @@ def settings():
             if event.type == pygame.QUIT:
                 return 0
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if 760 < event.pos[0] < 790  and 560 < event.pos[1] < 590 :
+                if 760 < event.pos[0] < 790 and 560 < event.pos[1] < 590:
                     return 1
         screen.blit(fon, (0, 0))
         all_sprites.draw(screen)
@@ -142,6 +143,7 @@ def settings():
         clock.tick(FPS)
 
 screens = 1
+
 while True:
     if screens == 1:
         screens = start_screen()
