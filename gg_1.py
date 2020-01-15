@@ -7,8 +7,17 @@ size = width, height = 800, 600  # размерчик нужно будет по
 clock = pygame.time.Clock()  # вот тут вот вообще лучше ничего не трогать(и на строку ниже тоже)
 screen = pygame.display.set_mode(size, FULLSCREEN)
 FPS = 50
-BACK = ['fon.png']  # здесь будут фоны
+BACK = ['fon.png', "hero_choose.jpg"]  # здесь будут фоны
 volume = None
+
+def text_render(inf, x, y, color):
+    font = pygame.font.Font(None, 50)
+    text = font.render(inf, 1, color) #(100, 255, 100)
+    text_w = text.get_width()
+    text_h = text.get_height()
+    screen.blit(text, (x - text.get_width() // 2, y - text.get_height() // 2))
+    pygame.draw.rect(screen, color, (x - 10 - text.get_width() // 2, y - 10 - text.get_height() // 2,
+                                           text_w + 20, text_h + 20), 1)
 
 # для загрузки изображений
 def load_image(name, colorkey=None):
@@ -43,15 +52,16 @@ def terminate():
 def print_ss():
     fon = pygame.transform.scale(load_image(BACK[0]), (width, height))
     screen.blit(fon, (0, 0))
-    font = pygame.font.Font(None, 50)
-    text = font.render("Новая игра", 1, (100, 255, 100))
-    text_x = width // 2 - text.get_width() // 2
-    text_y = height // 2 - text.get_height() // 2
-    text_w = text.get_width()
-    text_h = text.get_height()
-    screen.blit(text, (text_x, text_y))
-    pygame.draw.rect(screen, (0, 255, 0), (text_x - 10, text_y - 10,
-                                           text_w + 20, text_h + 20), 1)
+    text_render("Новая игра", width // 2, height // 2, (100, 255, 100))
+    text_render("Выйти", width // 2 - 5, height - 50, (255, 0, 0))
+     # x = width // 2 + 50
+     # y = heigth // 2 - 50
+
+
+
+def print_choosing():
+    fon = pygame.transform.scale(load_image(BACK[1]), (width, height))
+    screen.blit(fon, (0, 0))
 
 # это для экрана настроек(ДОДЕЛАТЬ!!!)
 def print_set():
@@ -89,13 +99,17 @@ def start_screen():
     sets = print_sprite(750, 550, "bugs.png")
     volume = print_sprite(750, 10, "volume.png")
     print_ss()
+    font = pygame.font.Font(None, 50)
+    text = font.render("Выйти", 1, (255, 0, 0))
+    text_w = text.get_width()
+    text_h = text.get_height()
     sound = 0
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return 0
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if 760 < event.pos[0] < 790 and 560 < event.pos[1] < 590 :
+                if 760 < event.pos[0] < 790 and 560 < event.pos[1] < 590:
                     return 2
                 elif 750 < event.pos[0] < 790 and 5 < event.pos[1] < 40:
                     if sound == 0:
@@ -116,6 +130,9 @@ def start_screen():
                         volume = print_sprite(750, 10, "volume.png")
                         all_sprites.update()
                         sound = 0
+                elif (width // 2 - 5 < event.pos[0] < width // 2 - 5 + text_w + 20) and (height - 50 < event.pos[1] < height - 50 + text_h + 20):
+                    terminate()
+
         all_sprites.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
