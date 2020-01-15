@@ -5,7 +5,7 @@ from pygame.locals import *
 pygame.init()
 size = width, height = 800, 600  # размерчик нужно будет поменять
 clock = pygame.time.Clock()  # вот тут вот вообще лучше ничего не трогать(и на строку ниже тоже)
-screen = pygame.display.set_mode(size)
+screen = pygame.display.set_mode(size, FULLSCREEN)
 FPS = 50
 BACK = ['fon.png', "hero_choose.jpg"]  # здесь будут фоны
 volume = None
