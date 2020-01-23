@@ -8,11 +8,11 @@ from level import *
 from enimies import *
 import random
 
-BACKGROUND_COLOR = "#000000"
 
 pygame.init()
 FILE_DIR = os.path.dirname(__file__)
 size = width, height = 800, 600  # размерчик нужно будет поменять
+level_h, level_w = 0, 0
 clock = pygame.time.Clock()  # вот тут вот вообще лучше ничего не трогать(и на строку ниже тоже)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("The_deadly_wave")
@@ -50,7 +50,7 @@ def camera_configure(camera, target_rect):
 
 
 def loadLevel():
-    global playerX, playerY  # объявляем глобальные переменные, это координаты героя
+    global playerX, playerY, level_h, level_w # объявляем глобальные переменные, это координаты героя
 
     levelFile = open('%s/levels/1.txt' % FILE_DIR)
     line = " "
@@ -64,6 +64,8 @@ def loadLevel():
                     endLine = line.find("|")  # то ищем символ конца строки
                     level.append(
                         line[0: endLine])  # и добавляем в уровень строку от начала до символа "|"
+                    #level_h += 1
+                    #level_w = max(len(line) - 2, level_w)
 
         if line[0] != "":  # если строка не пустая
             commands = line.split()  # разбиваем ее на отдельные команды
@@ -232,6 +234,7 @@ def gameplay():
 
     camera = Camera(camera_configure, total_level_width, total_level_height)
     tm = 0
+    tm_last = 0
     while not hero.dead:  # Основной цикл программы
         timer.tick(60)
         tm += 1
@@ -257,15 +260,13 @@ def gameplay():
                 running = False
             if e.type == KEYDOWN and e.key == K_ESCAPE:
                 hero.dead = True
-            print(tm)
-            if tm % 1000 == 0:
-                print('hello')
-                mn = Monster(random.randint(0, width), random.randint(0, height), random.randint(0, 4),
+            if tm - tm_last > 50:
+                tm_last = tm
+                mn = Monster(random.randint(0, total_level_width), random.randint(0, total_level_height), random.randint(0, 4),
                              random.randint(0, 4), random.randint(0, 150), random.randint(0, 150))
                 all_sprites.add(mn)
                 platforms.append(mn)
                 monsters.add(mn)
-
         screen.blit(fon, (0, 0))
         animated.update()  # показываем анимацию
         monsters.update(platforms)  # передвигаем всех монстров
@@ -275,6 +276,13 @@ def gameplay():
             screen.blit(e.image, camera.apply(e))
         pygame.display.update()  # обновление и вывод всех изменений на экран
     phase = 'score'
+    all_sprites.clear(screen, BACK[1])
+    monsters.clear(screen, BACK[1])
+    platforms.clear()
+    for e in all_sprites:
+        screen.blit(e.image, camera.apply(e))
+    pygame.display.update()
+
 
 level = []  # Все объекты
 animated = pygame.sprite.Group()  # все анимированные объекты, за исключением героя
