@@ -77,12 +77,6 @@ def loadLevel():
                     all_sprites.add(tp)
                     platforms.append(tp)
                     animated.add(tp)
-                if commands[0] == "monster":  # если первая команда monster, то создаем монстра
-                    mn = Monster(int(commands[1]), int(commands[2]), int(commands[3]),
-                                 int(commands[4]), int(commands[5]), int(commands[6]))
-                    all_sprites.add(mn)
-                    platforms.append(mn)
-                    monsters.add(mn)
 
 
 def text_render(inf, x, y, color):
@@ -237,9 +231,10 @@ def gameplay():
     total_level_height = len(level) * PLATFORM_HEIGHT  # высоту
 
     camera = Camera(camera_configure, total_level_width, total_level_height)
-
+    tm = 0
     while not hero.dead:  # Основной цикл программы
         timer.tick(60)
+        tm += 1
         for e in pygame.event.get():  # Обрабатываем события
             if e.type == QUIT:
                 terminate()
@@ -262,6 +257,14 @@ def gameplay():
                 running = False
             if e.type == KEYDOWN and e.key == K_ESCAPE:
                 hero.dead = True
+            print(tm)
+            if tm % 1000 == 0:
+                print('hello')
+                mn = Monster(random.randint(0, width), random.randint(0, height), random.randint(0, 4),
+                             random.randint(0, 4), random.randint(0, 150), random.randint(0, 150))
+                all_sprites.add(mn)
+                platforms.append(mn)
+                monsters.add(mn)
 
         screen.blit(fon, (0, 0))
         animated.update()  # показываем анимацию
