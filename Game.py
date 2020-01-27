@@ -1,3 +1,4 @@
+import time as time_lib
 import pygame
 import sys
 import os
@@ -23,6 +24,8 @@ phase = 'start_screen'
 all_sprites = pygame.sprite.Group()
 death = pygame.mixer.Sound('data/death.wav')
 hero = None
+time_ = 0
+time_record = 0
 
 class Camera(object):
     def __init__(self, camera_func, width, height):
@@ -171,7 +174,13 @@ def start_screen():
 
 
 def score():
-    global phase
+    global phase, time_record
+    print(time_, time_record)
+    if time_ > time_record:
+        time_record = int(time_)
+        record = True
+    else:
+        record = False
     pygame.mixer.music.stop()
     if sound == 1:
         death.play()
@@ -180,6 +189,14 @@ def score():
     text_render("Вы проиграли", width // 2, height // 2, (255, 0, 0))
     font = pygame.font.Font(None, 50)
     text = font.render("Вы проиграли", 1, (255, 0, 0))
+    if record:
+        text_render(f"Новый рекорд: {time_record}", width // 2, height // 4, (100, 255, 100))
+        font = pygame.font.Font(None, 50)
+        text = font.render(f"Новый рекорд: {time_record}", 1, (100, 255, 100))
+    else:
+        text_render(f"Ваше время: {time_}, рекорд: {time_record}", width // 2, height // 4, (255, 0, 0))
+        font = pygame.font.Font(None, 50)
+        text = font.render(f"Ваше время: {time_}, рекорд: {time_record}", 1, (255, 0, 0))
     pygame.display.flip()
     while True:
         for event in pygame.event.get():
@@ -191,7 +208,9 @@ def score():
 
 
 def gameplay():
-    global phase, hero
+    global phase, hero, time_
+    time_start = time_lib.time()
+    print(time_start)
     loadLevel()
     monsta = list()
     if not hero:
@@ -284,9 +303,8 @@ def gameplay():
     for e in all_sprites:
         screen.blit(e.image, camera.apply(e))
     pygame.display.update()
-    print(*animated)
-    print(*monsters)
-    print(*all_sprites)
+    time_ = time_lib.time() - time_start
+    print(time_)
 
 
 level = []  # Все объекты
