@@ -19,20 +19,18 @@ ANIMATION_DELAY = 0.1  # скорость смены кадров
 ANIMATION_SUPER_SPEED_DELAY = 0.05  # скорость смены кадров при ускорении
 ICON_DIR = os.path.dirname(__file__)  # Полный путь к каталогу с файлами
 
-ANIMATION_RIGHT = [(f'{ICON_DIR}/data/mario/r1.png'),
-                   (f'{ICON_DIR}/data/mario/r2.png'),
-                   (f'{ICON_DIR}/data/mario/r3.png'),
-                   (f'{ICON_DIR}/data/mario/r4.png'),
-                   (f'{ICON_DIR}/data/mario/r5.png')]
-ANIMATION_LEFT = [(f'{ICON_DIR}/data/mario/l1.png'),
-                  (f'{ICON_DIR}/data/mario/l2.png'),
-                  (f'{ICON_DIR}/data/mario/l3.png'),
-                  (f'{ICON_DIR}/data/mario/l4.png'),
-                  (f'{ICON_DIR}/data/mario/l5.png')]
-ANIMATION_JUMP_LEFT = [(f'{ICON_DIR}/data/mario/jl.png', 0.1)]
-ANIMATION_JUMP_RIGHT = [(f'{ICON_DIR}/data/mario/jr.png', 0.1)]
-ANIMATION_JUMP = [(f'{ICON_DIR}/data/mario/j.png', 0.1)]
-ANIMATION_STAY = [(f'{ICON_DIR}/data/mario/0.png', 0.1)]
+ANIMATION_RIGHT = [(f'{ICON_DIR}/data/samus/r1.png'),
+                   (f'{ICON_DIR}/data/samus/r2.png'),
+                   (f'{ICON_DIR}/data/samus/r3.png'),
+                   (f'{ICON_DIR}/data/samus/r4.png')]
+ANIMATION_LEFT = [(f'{ICON_DIR}/data/samus/l1.png'),
+                  (f'{ICON_DIR}/data/samus/l2.png'),
+                  (f'{ICON_DIR}/data/samus/l3.png'),
+                  (f'{ICON_DIR}/data/samus/l4.png')]
+ANIMATION_JUMP_LEFT = [(f'{ICON_DIR}/data/samus/jl.png', 0.1)]
+ANIMATION_JUMP_RIGHT = [(f'{ICON_DIR}/data/samus/jr.png', 0.1)]
+ANIMATION_JUMP = [(f'{ICON_DIR}/data/samus/j.png', 0.1)]
+ANIMATION_STAY = [(f'{ICON_DIR}/data/samus/0.png', 0.1)]
 
 
 class Player(sprite.Sprite):
