@@ -18,7 +18,7 @@ screen = pygame.display.set_mode(size)
 pygame.display.set_caption("The_deadly_wave")
 FPS = 50
 BACK = ['fon.png', "hero_choose.jpg", 'game_fon_1', 'game_fon']  # здесь будут фоны
-sound = 1
+sound = 0
 phase = 'start_screen'
 all_sprites = pygame.sprite.Group()
 death = pygame.mixer.Sound('data/death.wav')
@@ -193,6 +193,7 @@ def score():
 def gameplay():
     global phase, hero
     loadLevel()
+    monsta = list()
     if not hero:
         hero = Player(playerX, playerY)  # создаем героя по (x,y) координатам
     else:
@@ -264,6 +265,7 @@ def gameplay():
                 tm_last = tm
                 mn = Monster(random.randint(0, total_level_width), random.randint(0, total_level_height), random.randint(0, 4),
                              random.randint(0, 4), random.randint(0, 150), random.randint(0, 150))
+                monsta.append(mn)
                 all_sprites.add(mn)
                 platforms.append(mn)
                 monsters.add(mn)
@@ -276,12 +278,15 @@ def gameplay():
             screen.blit(e.image, camera.apply(e))
         pygame.display.update()  # обновление и вывод всех изменений на экран
     phase = 'score'
-    all_sprites.clear(screen, BACK[1])
-    monsters.clear(screen, BACK[1])
-    platforms.clear()
+    for i in monsta:
+        i.kill()
+    del monsta
     for e in all_sprites:
         screen.blit(e.image, camera.apply(e))
     pygame.display.update()
+    print(*animated)
+    print(*monsters)
+    print(*all_sprites)
 
 
 level = []  # Все объекты
